@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee CRUD</title>
+</head>
+
+<body>
+
+    <h2>Employee CRUD</h2>
+
+    <input id="id" placeholder="ID">
+    <input id="name" placeholder="Name">
+    <input id="gender" placeholder="Gender">
+    <input id="email" placeholder="Email">
+    <input id="salary" placeholder="Salary">
+
+    <br><br>
+
+    <button onclick="getAll()">GET ALL</button>
+    <button onclick="getOne()">GET ONE</button>
+    <button onclick="add()">POST</button>
+    <button onclick="update()">PUT</button>
+    <button onclick="remove()">DELETE</button>
+
+    <p id="result"></p>
+
+    <script>
+
+        let url = "http://localhost:3000";
+
+
+        function getAll() {
+
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("result").innerText =
+                        JSON.stringify(data);
+                });
+        }
+
+
+        function getOne() {
+
+            let id = document.getElementById("id").value;
+
+            fetch(url + "/" + id)
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("result").innerText =
+                        JSON.stringify(data);
+                });
+        }
+
+
+        function add() {
+
+            let employee = {
+                id: document.getElementById("id").value,
+                name: document.getElementById("name").value,
+                gender: document.getElementById("gender").value,
+                email: document.getElementById("email").value,
+                salary: document.getElementById("salary").value
+            };
+
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(employee)
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("result").innerText =
+                    JSON.stringify(data);
+            });
+        }
+
+
+        function update() {
+
+            let id = document.getElementById("id").value;
+
+            let employee = {
+                name: document.getElementById("name").value,
+                gender: document.getElementById("gender").value,
+                email: document.getElementById("email").value,
+                salary: document.getElementById("salary").value
+            };
+
+            fetch(url + "/" + id, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(employee)
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("result").innerText =
+                    JSON.stringify(data);
+            });
+        }
+
+
+        function remove() {
+
+            let id = document.getElementById("id").value;
+
+            fetch(url + "/" + id, {
+                method: "DELETE"
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("result").innerText =
+                    JSON.stringify(data);
+            });
+        }
+
+    </script>
+
+</body>
+</html>
