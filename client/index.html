@@ -28,95 +28,83 @@
 
         let url = "http://localhost:3000";
 
+async function getAll() {
+    let res = await fetch(url);
+    let data = await res.json();
 
-        function getAll() {
+    document.getElementById("result").innerText =
+        JSON.stringify(data);
+}
 
-            fetch(url)
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById("result").innerText =
-                        JSON.stringify(data);
-                });
-        }
+async function getOne() {
+    let id = document.getElementById("id").value;
 
+    let res = await fetch(url + "/" + id);
+    let data = await res.json();
 
-        function getOne() {
+    document.getElementById("result").innerText =
+        JSON.stringify(data);
+}
 
-            let id = document.getElementById("id").value;
+async function add() {
+    let employee = {
+        id: document.getElementById("id").value,
+        name: document.getElementById("name").value,
+        gender: document.getElementById("gender").value,
+        email: document.getElementById("email").value,
+        salary: document.getElementById("salary").value
+    };
 
-            fetch(url + "/" + id)
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById("result").innerText =
-                        JSON.stringify(data);
-                });
-        }
+    let res = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(employee)
+    });
 
+    let data = await res.json();
 
-        function add() {
+    document.getElementById("result").innerText =
+        JSON.stringify(data);
+}
 
-            let employee = {
-                id: document.getElementById("id").value,
-                name: document.getElementById("name").value,
-                gender: document.getElementById("gender").value,
-                email: document.getElementById("email").value,
-                salary: document.getElementById("salary").value
-            };
+async function update() {
+    let id = document.getElementById("id").value;
 
-            fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(employee)
-            })
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById("result").innerText =
-                    JSON.stringify(data);
-            });
-        }
+    let employee = {
+        name: document.getElementById("name").value,
+        gender: document.getElementById("gender").value,
+        email: document.getElementById("email").value,
+        salary: document.getElementById("salary").value
+    };
 
+    let res = await fetch(url + "/" + id, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(employee)
+    });
 
-        function update() {
+    let data = await res.json();
 
-            let id = document.getElementById("id").value;
+    document.getElementById("result").innerText =
+        JSON.stringify(data);
+}
 
-            let employee = {
-                name: document.getElementById("name").value,
-                gender: document.getElementById("gender").value,
-                email: document.getElementById("email").value,
-                salary: document.getElementById("salary").value
-            };
+async function remove() {
+    let id = document.getElementById("id").value;
 
-            fetch(url + "/" + id, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(employee)
-            })
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById("result").innerText =
-                    JSON.stringify(data);
-            });
-        }
+    let res = await fetch(url + "/" + id, {
+        method: "DELETE"
+    });
 
+    let data = await res.json();
 
-        function remove() {
-
-            let id = document.getElementById("id").value;
-
-            fetch(url + "/" + id, {
-                method: "DELETE"
-            })
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById("result").innerText =
-                    JSON.stringify(data);
-            });
-        }
+    document.getElementById("result").innerText =
+        JSON.stringify(data);
+}
 
     </script>
 

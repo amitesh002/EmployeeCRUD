@@ -12,7 +12,7 @@ const employeeRouter = require("./controller/employee.crud");
 const app = express();
 const corsOptions = {
     origin: '*',
-    optionsSuccessStatus: 200, // For legacy browser support
+    optionsSuccessStatus: 200, 
     methods: "GET, PUT, DELETE, POST"
 }
 
